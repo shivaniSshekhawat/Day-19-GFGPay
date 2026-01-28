@@ -27,13 +27,15 @@ const createCheckoutSession = async (req, res, next) => {
     await redis.sRem(availableKey, seats);
     await redis.sRem(lockedKey, seats);
 
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+
     const lineItems = seats.map((seat) => {
       const seatRow = seat[0];
       const price = show.pricing[seatRow];
 
       let imageUrl = show.posterUrl;
       if (imageUrl && imageUrl.startsWith("/")) {
-         imageUrl = `${req.protocol}://${req.get("host")}${imageUrl}`;
+         imageUrl = `${frontendUrl}${imageUrl}`;
       }
 
       return {
@@ -53,8 +55,8 @@ const createCheckoutSession = async (req, res, next) => {
       mode: "payment",
       payment_method_types: ["card"],
       line_items: lineItems,
-      success_url: `http://localhost:5173/?status=success&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `http://localhost:5173/?status=cancel`,
+      success_url: `${frontendUrl}/?status=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${frontendUrl}/?status=cancel`,
       metadata: { bookingId: booking._id.toString() },
     });
 
