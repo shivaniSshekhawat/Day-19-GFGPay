@@ -11,6 +11,7 @@ const port = process.env.PORT || 4000;
 const mongoose = require("mongoose");
 const redisClient = require("./config/redisClient");
 
+app.set("trust proxy", 1);
 app.use(cors({
     origin: "*"
 }));

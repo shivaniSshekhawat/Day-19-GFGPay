@@ -27,7 +27,7 @@ const createCheckoutSession = async (req, res, next) => {
     await redis.sRem(availableKey, seats);
     await redis.sRem(lockedKey, seats);
 
-    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+    const frontendUrl = process.env.FRONTEND_URL || "https://day-19-gfgpay.onrender.com";
 
     const lineItems = seats.map((seat) => {
       const seatRow = seat[0];
