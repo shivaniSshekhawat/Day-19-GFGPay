@@ -12,8 +12,7 @@ const mongoose = require("mongoose");
 const redisClient = require("./config/redisClient");
 
 app.use(cors({
-    origin: "*", 
-    credentials: true
+    origin: "*"
 }));
 app.use(express.json());
 

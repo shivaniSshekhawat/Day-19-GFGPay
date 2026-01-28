@@ -34,4 +34,7 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        sync: false 
+        fromService:
+            type: web
+            name: cinebook-backend
+            envVar: RenderServiceAddress 

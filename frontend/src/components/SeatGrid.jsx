@@ -24,11 +24,16 @@ export default function SeatGrid({ show, onBack }) {
   };
 
   const book = async () => {
-    const { data } = (await lockSeats({ showId: show._id, seats: selected })).data;
-    setLockedSeats(prev => [...prev, ...data]);
-    await new Promise(resolve => setTimeout(resolve, 500));
-    const res = await checkout({ showId: show._id, seats: selected });
-    window.location.href = res.data;
+    try {
+      const { data } = (await lockSeats({ showId: show._id, seats: selected })).data;
+      setLockedSeats(prev => [...prev, ...data]);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const res = await checkout({ showId: show._id, seats: selected });
+      window.location.href = res.data;
+    } catch (err) {
+      alert("Booking failed: " + (err.response?.data?.message || err.message));
+      console.error(err);
+    }
   };
 
   const groupedSeats = show.seats.reduce((acc, seat) => {
