@@ -1,3 +1,3 @@
 npm run build;
-rm -rf ../cinebook-movie-ticketing-system/dist;
-mv dist ../cinebook-movie-ticketing-system/;
+rm -rf ../backend/dist;
+mv dist ../backend/;
